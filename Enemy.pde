@@ -10,6 +10,7 @@ class Enemy
   float size = wallSize*0.75;
   
   float speed;
+  float maxSpeed = 20;
   
   float knockBack = 1;
   
@@ -104,6 +105,23 @@ class Enemy
       }
       
       
+    }
+    
+    if(xSpd > maxSpeed)
+    {
+      xSpd = maxSpeed;
+    }
+    if(ySpd > maxSpeed)
+    {
+      ySpd = maxSpeed;
+    }
+    if(xSpd < -maxSpeed)
+    {
+      xSpd = -maxSpeed;
+    }
+    if(ySpd < -maxSpeed)
+    {
+      ySpd = -maxSpeed;
     }
     xPos += xSpd;
     yPos += ySpd;

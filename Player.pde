@@ -3,11 +3,11 @@ class Player
   float xPos,yPos;
   float xSpd,ySpd;
   
-  float maxSpeed = 20;
+  float maxSpeed = wallSize/10;
   
   float angle;
   
-  float size = 100;
+  float size = wallSize;
   
   int maxHealth = 10;
   int health = 1;
@@ -69,13 +69,13 @@ class Player
   void movePlayer()
   {
     if(movingUp)
-      ySpd -=1; 
+      ySpd -=wallSize/100; 
     if(movingLeft)
-      xSpd -=1; 
+      xSpd -=wallSize/100; 
     if(movingDown)
-      ySpd +=1;  
+      ySpd +=wallSize/100;  
     if(movingRight)
-      xSpd +=1;  
+      xSpd +=wallSize/100;  
     
     if(xSpd > maxSpeed)
     {
@@ -84,6 +84,14 @@ class Player
     if(ySpd > maxSpeed)
     {
       ySpd = maxSpeed;
+    }
+    if(xSpd < -maxSpeed)
+    {
+      xSpd = -maxSpeed;
+    }
+    if(ySpd < -maxSpeed)
+    {
+      ySpd = -maxSpeed;
     }
     xPos += xSpd;
     yPos += ySpd;

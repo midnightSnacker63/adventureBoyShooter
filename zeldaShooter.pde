@@ -29,12 +29,13 @@ PImage [] badGuyImage = new PImage[5];
 PImage [] wallImage = new PImage[5];
 
 PImage money;
+PImage mapBorder;
 
 
 void setup()
 {
  size(1200,900);
- fullScreen();
+ //fullScreen();
  imageMode(CENTER);
  textAlign(CENTER);
  noSmooth();
@@ -69,6 +70,9 @@ void setup()
  wallImage[0].resize(int(wallSize),0);
  wallImage[1] = loadImage("woodTile.png");
  wallImage[1].resize(int(wallSize),0);
+ 
+ mapBorder = loadImage("mapBorder.png");
+ mapBorder.resize(365,0);
  createMap();
  player = new Player();
 }
@@ -173,13 +177,13 @@ void drawMiniMap()
 {
   push();
   fill(50,200,50);
-  circle(width-150,height-150,250);
+  circle(width-155,height-170,250);
   noFill();
   strokeWeight(17);
   stroke(#059CE0);
-  circle( width-150, height-150, 250 );
+  circle( width-155, height-170, 250 );
   strokeWeight(5);
-  circle(width-145,height-145,5);
+  circle(width-150,height-165,5);
   imageMode(CORNER);
 
   noStroke();
@@ -195,12 +199,12 @@ void drawMiniMap()
       {
         push();
         fill(255,0,0);
-        square( width-150+xDist/10, height-150+yDist/10, wallSize/10+1 );
+        square( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
         pop();
       }
       else
       {
-        square( width-150+xDist/10, height-150+yDist/10, wallSize/10+1 );
+        square( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
       }
       //image(wallImage[w.Type],width-110+xDist/10, height-110+yDist/10, wallSize/10,wallSize/10);
       
@@ -216,7 +220,7 @@ void drawMiniMap()
         strokeWeight(1);
         stroke(1);
         fill(255,0,0);
-        circle( width-150+xDist/10, height-150+yDist/10, wallSize/10+1 );
+        circle( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
         pop();
       }
     }
@@ -227,17 +231,21 @@ void drawMiniMap()
         xDist = p.xPos-player.xPos;
         yDist = p.yPos-player.yPos;
         fill(0,255,0);
-        circle( width-150+xDist/10, height-150+yDist/10, wallSize/15 );
+        circle( width-155+xDist/10, height-170+yDist/10, wallSize/15 );
       }
     }
   noFill();
   strokeWeight(17);
+  
   stroke(#059CE0);
-  circle( width-150, height-150, 240 );
-  circle( width-150, height-150, 260 );
+  circle( width-155, height-170, 240 );
+  //circle( width-155, height-170, 260 );
   stroke(#81D8FF);
-  circle( width-150, height-150, 250 );
-
+  circle( width-155, height-170, 250 );
+  push();
+  imageMode(CENTER);
+  image(mapBorder,width-155,height-170);
+  pop();
   
   pop();
 }
