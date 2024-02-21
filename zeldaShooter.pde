@@ -38,7 +38,7 @@ PImage mapBorder;
 void setup()
 {
  size(1200,900);
- //fullScreen();
+ fullScreen();
  imageMode(CENTER);
  textAlign(CENTER);
  noSmooth();
