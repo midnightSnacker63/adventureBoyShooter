@@ -303,6 +303,20 @@ class Shot
           return;
         }
       }
+        for( int i = 0; i < bosses.size(); i++ )
+      {
+        if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < size && !returning )
+        {
+          bosses.get(i).takeDamage( damage, (xSpd/3)*knockBack, (ySpd/3)*knockBack );//enemy take damage
+          if(returns)//kill normal shots when done but return hook shot
+          {
+            returning = true;
+          }
+          else 
+            active = false;
+          return;
+        }
+      }
     }
     if( !bad && returns && returning && dist( xPos,yPos, player.xPos,player.yPos ) < size )//kill returning stuff when returned
     {

@@ -8,6 +8,7 @@ ArrayList<Shot> shots = new ArrayList<Shot>();
 ArrayList<Pickup> pickups = new ArrayList<Pickup>();
 
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+ArrayList<Enemy> bosses = new ArrayList<Enemy>();
 
 ArrayList<Wall> walls = new ArrayList<Wall>();
 
@@ -18,13 +19,15 @@ float scrollXDist = 550, scrollYDist = 340;
 //wall data
 float wallSize = 100;
 
+float miniMapZoom = 10;
+
 boolean firingWeapon = false;
 
 PImage [] pickupImage = new PImage[5];
 
 PImage [] shotImage = new PImage[6];
 PImage [] badShotImage = new PImage[5];
-PImage [] badGuyImage = new PImage[5];
+PImage [] badGuyImage = new PImage[20];
 
 PImage [] wallImage = new PImage[5];
 
@@ -63,8 +66,14 @@ void setup()
  badGuyImage[2] = loadImage("splat.png");
  badGuyImage[2].resize(100,0);
  
+ badGuyImage[11] = loadImage("oldMan.png");
+ badGuyImage[11].resize(150,0);
+ 
+ 
  pickupImage[0] = loadImage("rupee.png");
  pickupImage[0].resize(75,0);
+ pickupImage[1] = loadImage("fullHeart.png");
+ pickupImage[1].resize(75,0);
  
  wallImage[0] = loadImage("cobbleColor.png");
  wallImage[0].resize(int(wallSize),0);
@@ -75,6 +84,7 @@ void setup()
  mapBorder.resize(365,0);
  createMap();
  player = new Player();
+ bosses.add( new Enemy( 11,4350-xOffset,3900-yOffset ));
 }
 void draw()
 {
@@ -97,6 +107,8 @@ void handlePlayer()
 
 void handleEnemies()
 {
+  
+  
   for(Enemy e: enemies)
   {
     e.moveAndDraw();
@@ -113,6 +125,23 @@ void handleEnemies()
       if(enemies.get(i).value > 0)
         pickups.add( new Pickup( 1,enemies.get(i).xPos,enemies.get(i).yPos ));
       enemies.remove(i);
+      
+      i--;
+    }
+  }
+  
+  for(Enemy b: bosses)
+  {
+    b.moveAndDraw();
+    b.checkForHit();
+  }
+  for( int i = 0; i< bosses.size(); i++ )
+  {
+    if(!bosses.get(i).active)
+    {
+      if(bosses.get(i).value > 0)
+        pickups.add( new Pickup( 6,bosses.get(i).xPos,bosses.get(i).yPos ));
+      bosses.remove(i);
       
       i--;
     }
@@ -182,15 +211,16 @@ void drawMiniMap()
   strokeWeight(17);
   stroke(#059CE0);
   circle( width-155, height-170, 250 );
-  strokeWeight(5);
-  circle(width-150,height-165,5);
+  strokeWeight(3);
+  fill(#059CE0);
+  circle(width-150,height-165,5 );
   imageMode(CORNER);
 
   noStroke();
   fill(#81D8FF);
   float xDist, yDist; //distance from player to wall
   for( Wall w: walls )
-    if( dist( w.xPos, w.yPos, player.xPos, player.yPos ) < 1250 )
+    if( dist( w.xPos, w.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
       xDist = w.xPos-player.xPos;
       yDist = w.yPos-player.yPos;
@@ -199,12 +229,12 @@ void drawMiniMap()
       {
         push();
         fill(255,0,0);
-        square( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
+        square( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/miniMapZoom+1 );
         pop();
       }
       else
       {
-        square( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
+        square( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/miniMapZoom+1 );
       }
       //image(wallImage[w.Type],width-110+xDist/10, height-110+yDist/10, wallSize/10,wallSize/10);
       
@@ -212,7 +242,7 @@ void drawMiniMap()
     
     for( Enemy e: enemies)
     {
-      if( dist( e.xPos, e.yPos, player.xPos, player.yPos ) < 1250 )
+      if( dist( e.xPos, e.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
       {
         xDist = e.xPos-player.xPos;
         yDist = e.yPos-player.yPos;
@@ -220,18 +250,32 @@ void drawMiniMap()
         strokeWeight(1);
         stroke(1);
         fill(255,0,0);
-        circle( width-155+xDist/10, height-170+yDist/10, wallSize/10+1 );
+        circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/miniMapZoom+1 );
+        pop();
+      }
+    }
+    for( Enemy b: bosses)
+    {
+      if( dist( b.xPos, b.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
+      {
+        xDist = b.xPos-player.xPos;
+        yDist = b.yPos-player.yPos;
+        push();
+        strokeWeight(1);
+        stroke(1);
+        fill(255,0,0);
+        circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/miniMapZoom+10 );
         pop();
       }
     }
     for( Pickup p: pickups)
     {
-      if( dist( p.xPos, p.yPos, player.xPos, player.yPos ) < 1250 )
+      if( dist( p.xPos, p.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
       {
         xDist = p.xPos-player.xPos;
         yDist = p.yPos-player.yPos;
         fill(0,255,0);
-        circle( width-155+xDist/10, height-170+yDist/10, wallSize/15 );
+        circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/(miniMapZoom+5) );
       }
     }
   noFill();
@@ -300,7 +344,7 @@ void mousePressed()
   //shots.add(new Shot(player.weapon+1,player.xPos,player.yPos));
   if(mousePressed && (mouseButton == RIGHT))
   {
-    enemies.add( new Enemy( 2,random(mouseX-50,mouseX+50)-xOffset,random(mouseY-50,mouseY+50)-yOffset ));
+    bosses.add( new Enemy( 11,random(mouseX-50,mouseX+50)-xOffset,random(mouseY-50,mouseY+50)-yOffset ));
   }
   if(mousePressed && (mouseButton == LEFT))
   {
@@ -377,12 +421,20 @@ void drawHUD()
 void mouseWheel(MouseEvent event) 
 {
  float e = event.getCount();
- if(e > 0 && player.weapon < player.weaponImage.length-1)
+ if(e > 0 && player.weapon < player.weaponImage.length-1 && dist(mouseX,mouseY,width-155,height-170) > 150)
   {
     player.weapon++;
   }
   if(e < 0 && player.weapon > 0)
   {
     player.weapon--;
+  }
+  if( e > 0 && miniMapZoom <= 30 && dist(mouseX,mouseY,width-155,height-170) < 150)
+  {
+    miniMapZoom++;
+  }
+  if( e < 0 && miniMapZoom > 10 && dist(mouseX,mouseY,width-155,height-170) < 150)
+  {
+    miniMapZoom--;
   }
 }

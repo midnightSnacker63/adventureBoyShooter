@@ -8,6 +8,7 @@ class Pickup
   float range = 100;
   float size = 50;
   boolean active;
+  boolean lifeHeart;
   
   public Pickup(int t,float x, float y)
   {
@@ -69,6 +70,13 @@ class Pickup
      image( pickupImage[0],0,0,size,size);
      pop();
    }
+   if(type == 6)//life heart
+   {
+     push();
+     translate(X,Y);
+     image( pickupImage[1],0,0,size,size);
+     pop();
+   }
     //movement
     if( dist(player.xPos,player.yPos,xPos,yPos) < range)
     {
@@ -96,9 +104,16 @@ class Pickup
     xSpd *= 0.90;
     ySpd *= 0.90;
     
-    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2)
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && !lifeHeart)
     {
       player.money += value;
+      active = false;
+    }
+    
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && lifeHeart)
+    {
+      player.maxHealth += value;
+      player.health = player.maxHealth;
       active = false;
     }
   }
@@ -128,9 +143,15 @@ class Pickup
        range = 100;
        break;
      case 5://rupee purple
-       value = 20;
+       value = 50;
        timer = 30;
        range = 100;
+       break;
+     case 6: //life heart
+     value = 10;
+     timer = 30;
+     range = 100;
+     lifeHeart = true;
        break;
    }
   }

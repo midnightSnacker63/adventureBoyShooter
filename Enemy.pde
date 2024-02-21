@@ -34,6 +34,14 @@ class Enemy
   
   boolean dummy = false;
   
+  //boss data
+  boolean isBoss;
+  float spawnRange;
+  int spawnRate;
+  int spawnCooldown = 0;
+  int population;
+  int spawnGroup;
+  
   public Enemy( int t, float x, float y)
   {
     xPos = x;
@@ -56,11 +64,13 @@ class Enemy
      health = 10;
      damage = 2;
      value = 10;
+     knockBack = 0.5;
      speed = 0.4;
        break;
      case 1://cosmo
      health = 50;
-     speed = .5;
+     knockBack = 0.75;
+     speed = .45;
        break;
      case 2://dummy
      health = 5000;
@@ -69,6 +79,20 @@ class Enemy
      damage = 1;
      dummy = true;
      cooldown = 1000;
+       break;
+       
+     //old man boss
+     case 11:
+     isBoss = true;
+     range = 350;
+     health = 100;
+     size = 150;
+     damage = 10;
+     speed = 0.05;
+     population = 3;
+     knockBack = 25;
+     spawnRate = 1000;
+     spawnRange = 300;
        break;
    }
   }
@@ -128,14 +152,23 @@ class Enemy
     //friction
     xSpd *= 0.95;
     ySpd *= 0.95;
+    
+    if( isBoss )
+      checkForSpawn();
   }
   void takeDamage( float amount, float x, float y )
   {
-    if(!dummy)
+    if( isBoss )
+    {
+      xSpd += x/10;
+      ySpd += y/10;
+    }
+    if( !isBoss )
     {
       xSpd += x;
       ySpd += y;
     }
+    
     if(health <= 0)
     {
       active = false;
@@ -150,6 +183,29 @@ class Enemy
       player.takeDamage( damage, (xSpd*knockBack), (ySpd*knockBack));
     }
   }
+  
+  void checkForSpawn()
+  {
+    if( millis() > spawnCooldown && !areaFull() )
+    {
+      spawnCooldown = millis()+spawnRate;
+      enemies.add( new Enemy( type-11, xPos+(random(-spawnRange,spawnRange)), yPos+(random(-spawnRange,spawnRange))));
+    }
+  }
+  
+  boolean areaFull()
+  {
+    int tally = 0;
+    for( Enemy e: enemies )
+      if( e.type == type-11 ) //if enemy was spawned by this boss
+        tally++;
+       
+    if( tally >= population )
+      return true;
+     
+    return false;
+  }
+  
   public float top() { return yPos-size/2; }
   public float bottom() { return yPos+size/2; }
   public float left() { return xPos-size/2; }
