@@ -1,41 +1,27 @@
 //handle collision here
-
 class Shot
 {
-  //enemy shots are bad
-  boolean bad;
-  //negative = enemy shot, positive = player shot, 0 = nothing
-  int type;
-  
   float xPos,yPos;
   float xSpd,ySpd;
-  
   float size;
   float angle;
-  
   float damage;
-  
   float friction = 1;
-  
   float knockBack  = 1;
   
-  float speed;
-  
+  //negative = enemy shot, positive = player shot, 0 = nothing
+  int type;
   int duration;
-  
   int cooldown = 100;
-  
   int travelDistance = 3000;
   
+  //enemy shots are bad
+  boolean bad;
   boolean active;
-  
   boolean returns;
   boolean returning;
-  
   boolean hitEnemy;
-  
   boolean canShoot = true;
-  
   boolean bouncy;
   
   public Shot( int t, float x, float y )
@@ -91,7 +77,7 @@ class Shot
        duration = 2000;
        damage = 0;
        setSpeed( 25 );
-       travelDistance = 100;
+       travelDistance = 120;
        knockBack = 2.5;
        cooldown = 500;
        break;
@@ -109,7 +95,7 @@ class Shot
      case 6://bomb
        size = 60;
        duration = 20;
-       damage = 20;
+       damage = 25;
        setSpeed( 20 );
        friction = 0.95;
        travelDistance = 5000;
@@ -291,21 +277,23 @@ class Shot
     {
       for( int i = 0; i < enemies.size(); i++ )
       {
-        if( dist( xPos,yPos, enemies.get(i).xPos,enemies.get(i).yPos ) < size && !returning )
+        if( dist( xPos,yPos, enemies.get(i).xPos,enemies.get(i).yPos ) < size/2+enemies.get(i).size && !returning )
         {
           enemies.get(i).takeDamage( damage, (xSpd/3)*knockBack, (ySpd/3)*knockBack );//enemy take damage
           if(returns)//kill normal shots when done but return hook shot
           {
             returning = true;
           }
-          else 
+          else
+          {
             active = false;
+          }
           return;
         }
       }
-        for( int i = 0; i < bosses.size(); i++ )
+      for( int i = 0; i < bosses.size(); i++ )
       {
-        if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < size && !returning )
+        if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < size+bosses.get(i).size/2 && !returning )
         {
           bosses.get(i).takeDamage( damage, (xSpd/3)*knockBack, (ySpd/3)*knockBack );//enemy take damage
           if(returns)//kill normal shots when done but return hook shot
@@ -321,6 +309,7 @@ class Shot
     if( !bad && returns && returning && dist( xPos,yPos, player.xPos,player.yPos ) < size )//kill returning stuff when returned
     {
       active = false;
+      return;
     }
   }
   

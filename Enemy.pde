@@ -2,36 +2,24 @@ class Enemy
 {
   float xPos,yPos;
   float xSpd,ySpd;
-  
   float angle;
-  
   float range = 500; // how far they see ya
-  
   float size = wallSize*0.75;
-  
   float speed;
   float maxSpeed = 20;
-  
   float knockBack = 1;
   
   int maxHealth = 10;
   int health = 10;
-  
   int timer;
   int cooldown;
-  
   int hitCooldown = 1000;
-  
   int type;
-  
   int damage = 1;
-  
   int value = 1;
   
   boolean active;
-  
   boolean stunned;
-  
   boolean dummy = false;
   
   //boss data
@@ -85,8 +73,8 @@ class Enemy
      case 11:
      isBoss = true;
      range = 350;
-     health = 100;
-     size = 150;
+     health = 250;
+     size = wallSize * 2.5;
      damage = 10;
      speed = 0.05;
      population = 3;
@@ -105,7 +93,12 @@ class Enemy
    push();
    translate(X,Y);
    rotate(angle-HALF_PI);
-   image( badGuyImage[type],0,0,size,size);
+   if(!isBoss)
+     image( badGuyImage[type],0,0,size,size);
+   else
+   {
+     image( badGuyImage[type],0,0,size+40,size+40);
+   }
    pop();
     //movement
     if( dist(player.xPos,player.yPos,xPos,yPos) < range && !stunned )

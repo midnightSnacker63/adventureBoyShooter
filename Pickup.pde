@@ -1,12 +1,14 @@
 class Pickup
 {
-  int type;
-  int timer;
-  int value = 1;
   float xPos,yPos;
   float xSpd,ySpd;
   float range = 100;
   float size = 50;
+  
+  int type;
+  int timer;
+  int value = 1;
+  
   boolean active;
   boolean lifeHeart;
   

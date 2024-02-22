@@ -63,6 +63,18 @@ class Wall
       while( e.left() < xPos+size/2 && e.yPos < bottom() && e.yPos > top() && e.left() > xPos )
         e.xPos++;
     }
+    
+    for( Enemy b: bosses )
+    {
+      while( b.bottom() > yPos-size/2 && b.xPos < right() && b.xPos > left() && b.bottom() < yPos )
+        b.yPos--;
+      while( b.top() < yPos+size/2 && b.xPos < right() && b.xPos > left() && b.top() > yPos )
+        b.yPos++;
+      while( b.right() > xPos-size/2 && b.yPos < bottom() && b.yPos > top() && b.right() < xPos )
+        b.xPos--;
+      while( b.left() < xPos+size/2 && b.yPos < bottom() && b.yPos > top() && b.left() > xPos )
+        b.xPos++;
+    }
    
    
     //Shots

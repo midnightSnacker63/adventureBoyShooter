@@ -37,7 +37,7 @@ PImage mapBorder;
 
 void setup()
 {
- size(1200,900);
+ size(1600,900);
  fullScreen();
  imageMode(CENTER);
  textAlign(CENTER);
@@ -67,7 +67,7 @@ void setup()
  badGuyImage[2].resize(100,0);
  
  badGuyImage[11] = loadImage("oldMan.png");
- badGuyImage[11].resize(150,0);
+ badGuyImage[11].resize(250,0);
  
  
  pickupImage[0] = loadImage("rupee.png");
@@ -84,7 +84,7 @@ void setup()
  mapBorder.resize(365,0);
  createMap();
  player = new Player();
- bosses.add( new Enemy( 11,4350-xOffset,3900-yOffset ));
+ bosses.add( new Enemy( 11,43.5*wallSize-xOffset,39*wallSize-yOffset ));
 }
 void draw()
 {
@@ -364,7 +364,7 @@ void drawHUD()
   fill(255);
   textAlign(CORNER);
   text("X" + player.money,100,height - 35);
-  text(int(player.xPos)+", "+int(player.yPos),85,height - 90);
+  text(int((player.xPos/wallSize)+1)+", "+int((player.yPos/wallSize)+1),85,height - 90);
   pop();
   
   push();//health bar
@@ -421,20 +421,20 @@ void drawHUD()
 void mouseWheel(MouseEvent event) 
 {
  float e = event.getCount();
- if(e > 0 && player.weapon < player.weaponImage.length-1 && dist(mouseX,mouseY,width-155,height-170) > 150)
+ if(e > 0 && player.weapon < player.weaponImage.length-1 && dist(mouseX,mouseY,width-155,height-170) > 150)//next weapon
   {
     player.weapon++;
   }
-  if(e < 0 && player.weapon > 0)
+  if(e < 0 && player.weapon > 0 && dist(mouseX,mouseY,width-155,height-170) > 150)//previous weapon
   {
     player.weapon--;
   }
-  if( e > 0 && miniMapZoom <= 30 && dist(mouseX,mouseY,width-155,height-170) < 150)
+  if( e > 0 && miniMapZoom <= wallSize/4  && dist(mouseX,mouseY,width-155,height-170) < 150)//zoom out
   {
-    miniMapZoom++;
+    miniMapZoom+=wallSize/100;
   }
-  if( e < 0 && miniMapZoom > 10 && dist(mouseX,mouseY,width-155,height-170) < 150)
+  if( e < 0 && miniMapZoom > 10 && dist(mouseX,mouseY,width-155,height-170) < 150)//zoom in
   {
-    miniMapZoom--;
+    miniMapZoom-=wallSize/100;
   }
 }

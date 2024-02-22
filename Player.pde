@@ -2,24 +2,16 @@ class Player
 {
   float xPos,yPos;
   float xSpd,ySpd;
-  
   float maxSpeed = wallSize/10;
-  
   float angle;
-  
   float size = wallSize;
   
   int maxHealth = 10;
   int health = 1;
-  
   int type;
-  
   int money;
-  
   int weapon = 0; 
-  
   int cooldown = 1000;
-  
   int [] weaponYOffset = {-85,-50,-70,-25,-25,0,0,0};//how far weapon sits from player
   int [] weaponXOffset = {0,0,0,0,-25,25,0,0};//how far weapon sits from player
   
