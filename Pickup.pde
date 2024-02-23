@@ -11,6 +11,7 @@ class Pickup
   
   boolean active;
   boolean lifeHeart;
+  boolean healing;
   
   public Pickup(int t,float x, float y)
   {
@@ -72,11 +73,18 @@ class Pickup
      image( pickupImage[0],0,0,size,size);
      pop();
    }
-   if(type == 6)//life heart
+   if(type == 6)//heart container
    {
      push();
      translate(X,Y);
      image( pickupImage[1],0,0,size,size);
+     pop();
+   }
+   if(type == 7)//life heart
+   {
+     push();
+     translate(X,Y);
+     image( pickupImage[2],0,0,size,size);
      pop();
    }
     //movement
@@ -106,17 +114,27 @@ class Pickup
     xSpd *= 0.90;
     ySpd *= 0.90;
     
-    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && !lifeHeart)
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && !lifeHeart)//rupees
     {
       player.money += value;
       active = false;
     }
     
-    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && lifeHeart)
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && lifeHeart)//heart containers
     {
       player.maxHealth += value;
       player.health = player.maxHealth;
       active = false;
+    }
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && healing)//life heart
+    {
+      if( player.health < player.maxHealth)
+        player.health += value;
+      active = false;
+      if(player.health >= player.maxHealth)
+      {
+        player.health = player.maxHealth;
+      }
     }
   }
   
@@ -149,11 +167,17 @@ class Pickup
        timer = 30;
        range = 100;
        break;
-     case 6: //life heart
+     case 6: //heart container
      value = 10;
      timer = 30;
      range = 100;
      lifeHeart = true;
+       break;
+     case 7: //healing heart
+     value = 10;
+     timer = 30;
+     range = 100;
+     healing = true;
        break;
    }
   }

@@ -68,7 +68,7 @@ class Shot
        damage = 5;
        setSpeed( 12 );
        returns = true;
-       friction = 0.9;
+       friction = 0.90;
        travelDistance = 500;
        cooldown = 2000;
        break;
@@ -180,7 +180,7 @@ class Shot
      line(player.xPos+xOffset,player.yPos+yOffset,X,Y);
      pop();
    }
-   if(type == 4)//not made yet
+   if(type == 4)//shield bash
    {
      push();
      translate(X,Y);

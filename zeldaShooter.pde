@@ -74,6 +74,8 @@ void setup()
   pickupImage[0].resize(75, 0);
   pickupImage[1] = loadImage("heartContainer.png");
   pickupImage[1].resize(75, 0);
+  pickupImage[2] = loadImage("fullHeart.png");
+  pickupImage[2].resize(75, 0);
 
   wallImage[0] = loadImage("cobbleColor.png");
   wallImage[0].resize(int(wallSize), 0);
@@ -306,9 +308,16 @@ void keyPressed()
     enemies.add( new Enemy( int(random(0, 2)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-500, mouseX+500)-xOffset, random(mouseY-500, mouseY+500)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-500, mouseX+500)-xOffset, random(mouseY-500, mouseY+500)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-500, mouseX+500)-xOffset, random(mouseY-500, mouseY+500)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
   }
   if (key == 'r')
   {

@@ -137,6 +137,7 @@ class Player
     {
       health = 0;
     }
+    
   }
   
   public float top() { return yPos-size/2; }
