@@ -74,7 +74,7 @@ class Enemy
      isBoss = true;
      range = 350;
      health = 250;
-     size = wallSize * 2.5;
+     size = wallSize * 2;
      damage = 10;
      speed = 0.05;
      population = 3;
@@ -97,7 +97,7 @@ class Enemy
      image( badGuyImage[type],0,0,size,size);
    else
    {
-     image( badGuyImage[type],0,0,size+40,size+40);
+     image( badGuyImage[type],0,0,size+40,size+40);//boss
    }
    pop();
     //movement
@@ -151,7 +151,7 @@ class Enemy
   }
   void takeDamage( float amount, float x, float y )
   {
-    if( isBoss )
+    if( isBoss )//knockback reduced on bosses
     {
       xSpd += x/10;
       ySpd += y/10;
@@ -171,7 +171,7 @@ class Enemy
   
   void checkForHit()
   {
-    if(dist(xPos,yPos,player.xPos,player.yPos) < size)
+    if(dist(xPos,yPos,player.xPos,player.yPos) < size/2 && !player.invincible)
     {
       player.takeDamage( damage, (xSpd*knockBack), (ySpd*knockBack));
     }

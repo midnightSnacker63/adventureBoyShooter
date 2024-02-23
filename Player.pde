@@ -6,16 +6,19 @@ class Player
   float angle;
   float size = wallSize;
   
-  int maxHealth = 10;
-  int health = 1;
+  int maxHealth;
+  int health;
   int type;
   int money;
   int weapon = 0; 
   int cooldown = 1000;
+  int eyeFrames = 1000;
+  int invincibilityTimer;
   int [] weaponYOffset = {-85,-50,-70,-25,-25,0,0,0};//how far weapon sits from player
   int [] weaponXOffset = {0,0,0,0,-25,25,0,0};//how far weapon sits from player
   
   boolean movingLeft, movingRight, movingUp, movingDown;
+  boolean invincible;
   
   PImage link;
   PImage [] weaponImage = new PImage[6];
@@ -28,7 +31,7 @@ class Player
    yPos = height/2;
   
    maxHealth = 100;
-   health = 75;
+   health = maxHealth;
   
    link = loadImage("lonk.png");
    link.resize(int(size),0);
@@ -47,16 +50,19 @@ class Player
   }
   void drawPlayer()
   {
-   float X = xPos+xOffset;
-   float Y = yPos+yOffset;
-   angle = atan2(mouseY-Y,mouseX-X); 
-   image( link, X, Y );
-   push();
-   translate(X,Y);
-   rotate(angle-HALF_PI);
-   rotate(PI);
-   image(weaponImage[weapon],weaponXOffset[weapon],weaponYOffset[weapon]);
-   pop();
+    if( !invincible || millis() % 100 < 50 )
+    {
+     float X = xPos+xOffset;
+     float Y = yPos+yOffset;
+     angle = atan2(mouseY-Y,mouseX-X); 
+     image( link, X, Y );
+     push();
+     translate(X,Y);
+     rotate(angle-HALF_PI);
+     rotate(PI);
+     image(weaponImage[weapon],weaponXOffset[weapon],weaponYOffset[weapon]);
+     pop();
+    }
   }
   void movePlayer()
   {
@@ -110,11 +116,24 @@ class Player
     if( xPos+xOffset > width-scrollXDist) //screen right
       xOffset -= xPos+xOffset - (width-scrollXDist);
   }
+  
+  void checkNoDamage()
+  {
+    if(millis() > invincibilityTimer)
+      invincible = false;
+  }
+  
   void takeDamage( float amount, float x, float y )
   {
-    health -= amount;
-    xSpd += x;
-    ySpd += y;
+    if(!invincible)
+    {
+      health -= amount;
+      xSpd += x;
+      ySpd += y;
+    }
+    invincible = true;
+    invincibilityTimer = millis() + eyeFrames; 
+    
     if(health <= 0)
     {
       health = 0;

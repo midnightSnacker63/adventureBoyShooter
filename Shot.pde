@@ -277,7 +277,7 @@ class Shot
     {
       for( int i = 0; i < enemies.size(); i++ )
       {
-        if( dist( xPos,yPos, enemies.get(i).xPos,enemies.get(i).yPos ) < size/2+enemies.get(i).size && !returning )
+        if( dist( xPos,yPos, enemies.get(i).xPos,enemies.get(i).yPos ) < (size+enemies.get(i).size)/2 && !returning )
         {
           enemies.get(i).takeDamage( damage, (xSpd/3)*knockBack, (ySpd/3)*knockBack );//enemy take damage
           if(returns)//kill normal shots when done but return hook shot
@@ -293,7 +293,7 @@ class Shot
       }
       for( int i = 0; i < bosses.size(); i++ )
       {
-        if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < size+bosses.get(i).size/2 && !returning )
+        if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < (size+bosses.get(i).size)/2 && !returning )
         {
           bosses.get(i).takeDamage( damage, (xSpd/3)*knockBack, (ySpd/3)*knockBack );//enemy take damage
           if(returns)//kill normal shots when done but return hook shot

@@ -66,13 +66,13 @@ void setup()
  badGuyImage[2] = loadImage("splat.png");
  badGuyImage[2].resize(100,0);
  
- badGuyImage[11] = loadImage("oldMan.png");
+ badGuyImage[11] = loadImage("ganon.png");
  badGuyImage[11].resize(250,0);
  
  
  pickupImage[0] = loadImage("rupee.png");
  pickupImage[0].resize(75,0);
- pickupImage[1] = loadImage("fullHeart.png");
+ pickupImage[1] = loadImage("heartContainer.png");
  pickupImage[1].resize(75,0);
  
  wallImage[0] = loadImage("cobbleColor.png");
@@ -103,6 +103,7 @@ void handlePlayer()
   player.drawPlayer();
   player.movePlayer();
   player.checkForScroll();
+  player.checkNoDamage();
 }
 
 void handleEnemies()
