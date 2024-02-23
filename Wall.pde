@@ -80,8 +80,18 @@ class Wall
     //Shots
     if(!open)
       for( Shot s: shots )
-        if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && !s.bouncy)
-          s.active = false; 
+      {
+        if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && !s.returns)
+        {
+          s.active = false;
+        }
+        if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && s.returns)
+        {
+          s.xSpd *= 0.9;
+          s.ySpd *= 0.9;
+          s.returning = true;
+        }
+      }
   }
 
   public float top() { return yPos-size/2; }

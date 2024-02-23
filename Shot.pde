@@ -89,7 +89,7 @@ class Shot
        returns = true;
        friction = 0.95;
        travelDistance = 500;
-       cooldown = 1500;
+       cooldown = 1000;
        knockBack = 2.5;
        break;
      case 6://bomb
@@ -98,7 +98,7 @@ class Shot
        damage = 25;
        setSpeed( 20 );
        friction = 0.95;
-       travelDistance = 5000;
+       travelDistance = 3000;
        cooldown = 1500;
        knockBack = 5;
        break;
@@ -262,7 +262,7 @@ class Shot
     }
     for ( int i = 0; i< pickups.size(); i++ )
     {
-      if (returns && dist(xPos,yPos,pickups.get(i).xPos,pickups.get(i).yPos) < 50)
+      if (returns && dist(xPos,yPos,pickups.get(i).xPos,pickups.get(i).yPos) < (size+pickups.get(i).size)/2)
       {
         pickups.get(i).xPos = xPos;
         pickups.get(i).yPos = yPos;
