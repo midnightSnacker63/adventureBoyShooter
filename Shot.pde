@@ -260,6 +260,15 @@ class Shot
       active = false;
      
     }
+    for ( int i = 0; i< pickups.size(); i++ )
+    {
+      if (returns && dist(xPos,yPos,pickups.get(i).xPos,pickups.get(i).yPos) < 50)
+      {
+        pickups.get(i).xPos = xPos;
+        pickups.get(i).yPos = yPos;
+      }
+    }
+    
  }
 
   void checkForHit()

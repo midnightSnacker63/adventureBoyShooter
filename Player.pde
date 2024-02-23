@@ -133,7 +133,6 @@ class Player
     }
     invincible = true;
     invincibilityTimer = millis() + eyeFrames; 
-    
     if(health <= 0)
     {
       health = 0;

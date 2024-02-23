@@ -28,7 +28,6 @@ class Enemy
   int spawnRate;
   int spawnCooldown = 0;
   int population;
-  int spawnGroup;
   
   public Enemy( int t, float x, float y)
   {
@@ -77,9 +76,9 @@ class Enemy
      size = wallSize * 2;
      damage = 10;
      speed = 0.05;
-     population = 3;
+     population = 10;
      knockBack = 25;
-     spawnRate = 1000;
+     spawnRate = 10000;
      spawnRange = 300;
        break;
    }
