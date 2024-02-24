@@ -73,6 +73,8 @@ void setup()
 
   badGuyImage[11] = loadImage("ganon.png");
   badGuyImage[11].resize(250, 0);
+  badGuyImage[12] = loadImage("oldMan.png");
+  badGuyImage[12].resize(250, 0);
 
 
   pickupImage[0] = loadImage("rupee.png");
@@ -333,8 +335,8 @@ void keyPressed()
   if (key == 'r')
   {
     shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
-    shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
-    shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
+    //shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
+    //shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
   }
   if (key == 'q' && player.weapon < player.weaponImage.length-1)
   {

@@ -68,7 +68,7 @@ class Enemy
      cooldown = 1000;
        break;
        
-     //old man boss
+     //ganon
      case 11:
      isBoss = true;
      range = 500;
@@ -79,8 +79,21 @@ class Enemy
      speed = 0.05;
      population = 10;
      knockBack = 25;
-     spawnRate = 5000;
-     spawnRange = 30;
+     spawnRate = 3000;
+     spawnRange = 50;
+       break;
+     case 12://test
+     isBoss = true;
+     range = 500;
+     maxHealth = 250;
+     health = 250;
+     size = wallSize * 2;
+     damage = 0;
+     speed = 0;
+     population = 1;
+     knockBack = 0;
+     spawnRate = 300;
+     spawnRange = 500;
        break;
    }
   }
