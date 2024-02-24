@@ -45,10 +45,9 @@ class Shot
    {
      //sword beam
      case 1:
-       bad = false;
-       size = 30;
+       size = 50;
        duration = 2000;
-       damage = 2;
+       damage = 3;
        setSpeed( 12 );
        knockBack = 1.5;
        cooldown = 750;
@@ -59,18 +58,18 @@ class Shot
        duration = 2000;
        damage = 3;
        setSpeed( 20 );
-       cooldown = 250;
+       cooldown = 350;
        break;
      //hookshot 
      case 3:
        size = 20;
        duration = 2000;
-       damage = 5;
+       damage = 7;
        setSpeed( 12 );
        returns = true;
        friction = 0.90;
        travelDistance = 500;
-       cooldown = 2000;
+       cooldown = 1500;
        break;
      case 4://shield Bash
        size = 50;
@@ -84,7 +83,7 @@ class Shot
      case 5://boomerrang
        size = 60;
        duration = 2000;
-       damage = 5;
+       damage = 8;
        setSpeed( 20 );
        returns = true;
        friction = 0.95;
@@ -95,7 +94,7 @@ class Shot
      case 6://bomb
        size = 60;
        duration = 20;
-       damage = 25;
+       damage = 50;
        setSpeed( 20 );
        friction = 0.95;
        travelDistance = 3000;
@@ -195,7 +194,8 @@ class Shot
      translate(X,Y);
      rotate(angle-HALF_PI);
      rotate(PI);
-     angle+=0.25;
+     //angle+=0.25;
+     angle+=(abs(xSpd)+abs(ySpd))/100;
      image(shotImage[type-1],-15,-15);
      
      //if(!returning)
@@ -208,10 +208,19 @@ class Shot
      translate(X,Y);
      rotate(angle-HALF_PI);
      rotate(PI);
-
+     angle+=(abs(xSpd)+abs(ySpd))/125;
      image(shotImage[type-1],-15,-15);
      //if(!returning)
      //  circle(0,0,size);
+     pop();
+   }
+   if(type == -1)//deku nut
+   {
+     push();
+     translate(X,Y);
+     rotate(angle-HALF_PI);
+     rotate(PI);
+     image(badShotImage[0],0,-85);
      pop();
    }
    if(type == -2)//splat
@@ -232,6 +241,7 @@ class Shot
    }
    if( returning )//hook shot return
     {
+      
       xSpd *= friction;//hookshot friction
       ySpd *= friction;
       if( player.xPos > xPos )

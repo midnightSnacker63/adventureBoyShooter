@@ -71,15 +71,16 @@ class Enemy
      //old man boss
      case 11:
      isBoss = true;
-     range = 350;
+     range = 500;
+     maxHealth = 250;
      health = 250;
      size = wallSize * 2;
      damage = 10;
      speed = 0.05;
      population = 10;
      knockBack = 25;
-     spawnRate = 10000;
-     spawnRange = 300;
+     spawnRate = 5000;
+     spawnRange = 30;
        break;
    }
   }
@@ -146,7 +147,19 @@ class Enemy
     ySpd *= 0.95;
     
     if( isBoss )
+    {
       checkForSpawn();
+      
+      push();//health bar
+      rectMode(CORNER);
+      noFill();
+      rect(X-size/2-25, Y+100, maxHealth, 20);
+      fill(255, 10, 0);
+      rect(X-size/2-25, Y+100, health, 20);
+      pop();
+    }
+      
+    
   }
   void takeDamage( float amount, float x, float y )
   {
@@ -160,12 +173,14 @@ class Enemy
       xSpd += x;
       ySpd += y;
     }
-    
+    health -= amount;
+    if( amount > 0 )
+      clickReports.add( new ClickReport("-"+int(amount), random(xPos-50,xPos+50), random(yPos-50,yPos+50) ));
     if(health <= 0)
     {
       active = false;
     }
-    health -= amount;
+    
   }
   
   void checkForHit()

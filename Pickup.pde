@@ -117,6 +117,7 @@ class Pickup
     if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && !lifeHeart)//rupees
     {
       player.money += value;
+      clickReports.add( new ClickReport("+"+int(value), random(xPos-50,xPos+50), random(yPos-50,yPos+50) ));
       active = false;
     }
     

@@ -12,6 +12,8 @@ ArrayList<Enemy> bosses = new ArrayList<Enemy>();
 
 ArrayList<Wall> walls = new ArrayList<Wall>();
 
+ArrayList<ClickReport> clickReports = new ArrayList<ClickReport>();
+
 //for scrolling
 float xOffset, yOffset;
 float scrollXDist = 550, scrollYDist = 340;
@@ -58,6 +60,9 @@ void setup()
   shotImage[4].resize(70, 0);
   shotImage[5] = loadImage("bomb.png");
   shotImage[5].resize(70, 0);
+  
+  badShotImage[0] = loadImage("dekuNut.png");
+  badShotImage[0].resize(50,0);
 
   badGuyImage[0] = loadImage("dekuScrub.png");
   badGuyImage[0].resize(75, 0);
@@ -98,6 +103,7 @@ void draw()
   handlePickups();
   drawHUD();
   drawMiniMap();
+  handleGhostNumbers();
 }
 
 void handlePlayer()
@@ -108,6 +114,11 @@ void handlePlayer()
   player.checkNoDamage();
 }
 
+void handleGhostNumbers()
+{
+  for( ClickReport c: clickReports)
+    c.moveAndDraw();
+}
 void handleEnemies()
 {
 
@@ -338,6 +349,8 @@ void keyPressed()
     enemies.clear();
     shots.clear();
     pickups.clear();
+    bosses.clear();
+    clickReports.clear();
   }
 }
 void keyReleased()

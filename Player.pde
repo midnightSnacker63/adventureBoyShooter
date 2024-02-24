@@ -128,6 +128,8 @@ class Player
     if(!invincible)
     {
       health -= amount;
+      if( amount > 0 )
+        clickReports.add( new ClickReport("-"+int(amount), random(xPos-50,xPos+50), random(yPos-50,yPos+50) ));
       xSpd += x;
       ySpd += y;
     }

@@ -85,10 +85,10 @@ class Wall
         {
           s.active = false;
         }
-        if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && s.returns)
+        if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && s.returns && !s.returning)
         {
-          s.xSpd *= 0.9;
-          s.ySpd *= 0.9;
+          s.xSpd *= 0.25;
+          s.ySpd *= 0.25;
           s.returning = true;
         }
       }
