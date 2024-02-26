@@ -454,7 +454,7 @@ void mouseWheel(MouseEvent event)
   {
     player.weapon--;
   }
-  if ( e > 0 && miniMapZoom <= wallSize/4  && dist(mouseX, mouseY, width-155, height-170) < 150)//zoom out
+  if ( e > 0 && miniMapZoom <= wallSize/2  && dist(mouseX, mouseY, width-155, height-170) < 150)//zoom out
   {
     miniMapZoom+=wallSize/100;
   }
