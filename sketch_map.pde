@@ -2,6 +2,7 @@ void createMap()
 {
   String mapString = "";
   int mapLength = 0;
+  int mapIndex;
  
   //Maps should be rectangular
   mapString += "######################################                                                  ###############################################################################################"; mapLength = mapString.length();
