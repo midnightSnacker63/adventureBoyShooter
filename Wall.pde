@@ -87,8 +87,10 @@ class Wall
         }
         if( s.right() > left() && s.left() < right() && s.top() < bottom() && s.bottom() > top() && s.returns && !s.returning)
         {
-          s.xSpd *= 0.25;
-          s.ySpd *= 0.25;
+          //s.xSpd *= 0.25;
+          //s.ySpd *= 0.25;
+          s.xSpd *= 0;
+          s.ySpd *= 0;
           s.returning = true;
         }
       }

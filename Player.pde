@@ -142,6 +142,18 @@ class Player
     
   }
   
+  boolean onShop()
+  {
+    for ( int i = 0; i< shops.size(); i++ )
+    {
+      if(dist(shops.get(i).xPos,shops.get(i).yPos,xPos,yPos) < 100)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+  
   public float top() { return yPos-size/2; }
   public float bottom() { return yPos+size/2; }
   public float left() { return xPos-size/2; }

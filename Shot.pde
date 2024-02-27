@@ -23,6 +23,7 @@ class Shot
   boolean hitEnemy;
   boolean canShoot = true;
   boolean bouncy;
+  boolean grapple;
   
   public Shot( int t, float x, float y )
   {

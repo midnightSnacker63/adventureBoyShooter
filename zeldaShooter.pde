@@ -4,33 +4,28 @@
 Player player;
 
 ArrayList<Shot> shots = new ArrayList<Shot>();
-
 ArrayList<Pickup> pickups = new ArrayList<Pickup>();
-
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayList<Enemy> bosses = new ArrayList<Enemy>();
-
 ArrayList<Wall> walls = new ArrayList<Wall>();
-
 ArrayList<ClickReport> clickReports = new ArrayList<ClickReport>();
+ArrayList<Shop> shops = new ArrayList<Shop>();
 
 //for scrolling
 float xOffset, yOffset;
 float scrollXDist = 550, scrollYDist = 340;
-
 //wall data
 float wallSize = 100;
-
 float miniMapZoom = 10;
+
+
 
 boolean firingWeapon = false;
 
 PImage [] pickupImage = new PImage[5];
-
 PImage [] shotImage = new PImage[6];
 PImage [] badShotImage = new PImage[5];
 PImage [] badGuyImage = new PImage[20];
-
 PImage [] wallImage = new PImage[5];
 
 PImage money;
@@ -94,15 +89,18 @@ void setup()
   createMap();
   player = new Player();
   bosses.add( new Enemy( 11, 43.5*wallSize-xOffset, 39*wallSize-yOffset ));
+  
+  shops.add( new Shop(150,450) );
 }
 void draw()
 {
   background(50, 100, 50);
   handleWalls();
+  handleShops();
+  handlePickups();
   handlePlayer();
   handleEnemies();
   handleShots();
-  handlePickups();
   drawHUD();
   drawMiniMap();
   handleGhostNumbers();
@@ -120,6 +118,14 @@ void handleGhostNumbers()
 {
   for( ClickReport c: clickReports)
     c.moveAndDraw();
+}
+
+void handleShops()
+{
+  for(Shop s: shops)
+  {
+    s.drawShop();
+  }
 }
 void handleEnemies()
 {
@@ -317,26 +323,17 @@ void keyPressed()
     player.movingDown = true;
   if (key == 'd')
     player.movingRight = true;
-  if (key == 'e')
+  if (key == 'E')
     enemies.add( new Enemy( int(random(0, 2)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
     pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
   }
   if (key == 'r')
   {
     shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
-    //shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
-    //shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
+    shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
+    shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
   }
   if (key == 'q' && player.weapon < player.weaponImage.length-1)
   {
@@ -346,13 +343,18 @@ void keyPressed()
   {
     player.weapon--;
   }
-  if (key == 'c')
+  if (key == 'c')//clear everything
   {
     enemies.clear();
     shots.clear();
     pickups.clear();
     bosses.clear();
     clickReports.clear();
+  }
+  
+  if(player.onShop() && key == 'e')//enter shop
+  {
+    
   }
 }
 void keyReleased()
