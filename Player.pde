@@ -19,6 +19,7 @@ class Player
   
   boolean movingLeft, movingRight, movingUp, movingDown;
   boolean invincible;
+  boolean [] weaponUnlocked = {true,true,true,true,true,true};
   
   PImage link;
   PImage [] weaponImage = new PImage[6];

@@ -18,9 +18,9 @@ float scrollXDist = 550, scrollYDist = 340;
 float wallSize = 100;
 float miniMapZoom = 10;
 
-
-
 boolean firingWeapon = false;
+boolean inShop;
+boolean inWorld = true;
 
 PImage [] pickupImage = new PImage[5];
 PImage [] shotImage = new PImage[6];
@@ -35,7 +35,7 @@ PImage mapBorder;
 void setup()
 {
   size(1600, 900);
-  fullScreen();
+  //fullScreen();
   imageMode(CENTER);
   textAlign(CENTER);
   noSmooth();
@@ -88,22 +88,26 @@ void setup()
   mapBorder.resize(365, 0);
   createMap();
   player = new Player();
-  bosses.add( new Enemy( 11, 43.5*wallSize-xOffset, 39*wallSize-yOffset ));
-  
-  shops.add( new Shop(150,450) );
 }
 void draw()
 {
   background(50, 100, 50);
-  handleWalls();
-  handleShops();
-  handlePickups();
-  handlePlayer();
-  handleEnemies();
-  handleShots();
-  drawHUD();
-  drawMiniMap();
-  handleGhostNumbers();
+  if(inWorld)
+  {
+    handleWalls();
+    handleShops();
+    handlePickups();
+    handlePlayer();
+    handleEnemies();
+    handleShots();
+    drawHUD();
+    drawMiniMap();
+    handleGhostNumbers();
+  }
+  if(inShop)
+  {
+    handleShopInside();
+  }
 }
 
 void handlePlayer()
@@ -127,11 +131,16 @@ void handleShops()
     s.drawShop();
   }
 }
+void handleShopInside()
+{
+  for(int i = 0; i < 1; i++)
+  {
+    shops.get(i).drawInside();
+  }
+}
 void handleEnemies()
 {
-
-
-  for (Enemy e : enemies)
+  for (Enemy e: enemies)
   {
     e.moveAndDraw();
     e.checkForHit();
@@ -214,6 +223,20 @@ void handlePickups()
     }
   }
 }
+
+void buyStuff()
+{
+  for(int i = 0; i < 1; i++)
+  {
+    for(int j = 0; j < 6; j++)
+    {
+      if(!shops.get(i).itemBought[j])
+      {
+        shops.get(i).buyThings();
+      }
+    }
+  }
+}
 void attemptShot()
 {
   if (millis() > player.cooldown)
@@ -227,6 +250,8 @@ void attemptShot()
 void drawMiniMap()
 {
   push();
+  rectMode(CENTER);
+  push();
   fill(50, 200, 50);
   circle(width-155, height-170, 250);
   noFill();
@@ -235,7 +260,7 @@ void drawMiniMap()
   circle( width-155, height-170, 250 );
   strokeWeight(3);
   fill(#059CE0);
-  circle(width-150, height-165, 5 );
+  circle(width-155, height-170, 5 );
   imageMode(CORNER);
 
   noStroke();
@@ -250,6 +275,7 @@ void drawMiniMap()
       if (w.open)
       {
         push();
+        rectMode(CENTER);
         fill(255, 0, 0);
         square( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/miniMapZoom+1 );
         pop();
@@ -298,6 +324,16 @@ void drawMiniMap()
       circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/(miniMapZoom+5) );
     }
   }
+  for ( Shop p : shops)
+  {
+    if ( dist( p.xPos, p.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
+    {
+      xDist = p.xPos-player.xPos;
+      yDist = p.yPos-player.yPos;
+      fill(0, 255, 255);
+      circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/(miniMapZoom+5) );
+    }
+  }
   noFill();
   strokeWeight(17);
 
@@ -311,6 +347,7 @@ void drawMiniMap()
   image(mapBorder, width-155, height-170);
   pop();
 
+  pop();
   pop();
 }
 void keyPressed()
@@ -335,14 +372,6 @@ void keyPressed()
     shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
     shots.add(new Shot(player.weapon+1, random(player.xPos-75, player.xPos+75), random(player.yPos-75, player.yPos+75)));
   }
-  if (key == 'q' && player.weapon < player.weaponImage.length-1)
-  {
-    player.weapon++;
-  }
-  if (key == '1' && player.weapon > 0)
-  {
-    player.weapon--;
-  }
   if (key == 'c')//clear everything
   {
     enemies.clear();
@@ -352,9 +381,15 @@ void keyPressed()
     clickReports.clear();
   }
   
-  if(player.onShop() && key == 'e')//enter shop
+  if(player.onShop() && !inShop && key == 'e')//enter shop
   {
-    
+    inShop = true;
+    inWorld = false;
+  }
+  if(inShop && key == 'q')
+  {
+    inShop = false;
+    inWorld = true;
   }
 }
 void keyReleased()
@@ -379,6 +414,8 @@ void mousePressed()
   {
     firingWeapon = true;
   }
+  buyStuff();
+  
 }
 void mouseReleased()
 {
@@ -460,7 +497,7 @@ void mouseWheel(MouseEvent event)
   {
     miniMapZoom+=wallSize/100;
   }
-  if ( e < 0 && miniMapZoom > 10 && dist(mouseX, mouseY, width-155, height-170) < 150)//zoom in
+  if ( e < 0 && miniMapZoom > 6 && dist(mouseX, mouseY, width-155, height-170) < 150)//zoom in
   {
     miniMapZoom-=wallSize/100;
   }
