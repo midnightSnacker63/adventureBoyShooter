@@ -99,7 +99,7 @@ class Shot
        setSpeed( 20 );
        friction = 0.95;
        travelDistance = 3000;
-       cooldown = 1500;
+       cooldown = 2000;
        knockBack = 5;
        break;
      //bad guy deku nut

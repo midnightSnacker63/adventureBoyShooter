@@ -93,7 +93,7 @@ class Enemy
      population = 1;
      knockBack = 0;
      spawnRate = 300;
-     spawnRange = 500;
+     spawnRange = range;
        break;
    }
   }
@@ -107,7 +107,10 @@ class Enemy
    translate(X,Y);
    rotate(angle-HALF_PI);
    if(!isBoss)
+   {
+     
      image( badGuyImage[type],0,0,size,size);
+   }
    else
    {
      image( badGuyImage[type],0,0,size+40,size+40);//boss
@@ -187,6 +190,10 @@ class Enemy
       ySpd += y;
     }
     health -= amount;
+    spawnRange += amount;
+    population += amount;
+    if(range < 1000)
+      range += 50;
     if( amount > 0 )
       clickReports.add( new ClickReport("-"+int(amount), random(xPos-50,xPos+50), random(yPos-50,yPos+50) ));
     if(health <= 0)
