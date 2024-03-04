@@ -9,7 +9,7 @@ class Shop
   int [] itemCost = {10,20,30,40,50,60};
   int shopPage;
   
-  boolean [] itemBought = {false,false,false,false,false,false};
+  boolean [] itemBought = {true,false,false,false,false,false};
   
   public Shop(float x, float y)
   {
@@ -68,9 +68,13 @@ class Shop
       circle(x,height-200,150);
       fill(0);
       if(!itemBought[i])
+      {
+        image(player.weaponImage[i],x,height-180);
         text(itemCost[i],x,height-180);
+      }
       else if(itemBought[i])
         text("bought",x,height-180);
+      
       pop();
     }
     
@@ -85,9 +89,10 @@ class Shop
       if(dist(mouseX,mouseY,x,height-200) < 75 && !itemBought[i] && player.money >= itemCost[i]  )
       {
         println("chaching"+i);
-        
+        player.currentWeaponCount++;
         player.money -= itemCost[i];
         itemBought[i] = true;
+        
       }
     }
   }

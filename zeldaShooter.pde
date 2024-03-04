@@ -116,6 +116,11 @@ void handlePlayer()
   player.movePlayer();
   player.checkForScroll();
   player.checkNoDamage();
+  
+  for(int i = 0; i < 6; i++)
+  {
+    player.weaponUnlocked[i] = shops.get(0).itemBought[i];
+  }
 }
 
 void handleGhostNumbers()
@@ -449,43 +454,43 @@ void drawHUD()
   {
     circle(width - 240, 125, 70);
   }
-  if (player.weapon < player.weaponImage.length-1)
-  {
-    circle(width - 80, 125, 70);
-  }
+  //if (player.weapon < player.weaponImage.length-1)
+  //{
+  //  circle(width - 80, 125, 70);
+  //}
   if (player.weapon > 1)
   {
     circle(width - 300, 150, 60);
   }
-  if (player.weapon < player.weaponImage.length-2)
-  {
-    circle(width - 20, 150, 60);
-  }
+  //if (player.weapon < player.weaponImage.length-2)
+  //{
+  //  circle(width - 20, 150, 60);
+  //}
   pop();
 
   if (player.weapon > 0)
   {
     image(player.weaponImage[player.weapon-1], width - 240, 125);//previous weapon
   }
-  if (player.weapon < player.weaponImage.length-1)
-  {
-    image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
-  }
-  if (player.weapon > 1)
+  //if (player.weapon < player.weaponImage.length-1 && player.currentWeaponCount > 0)
+  //{
+  //  image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
+  //}
+  if (player.weapon > 1 )
   {
     image(player.weaponImage[player.weapon-2], width - 300, 150);//previous weapon
   }
-  if (player.weapon < player.weaponImage.length-2)
-  {
-    image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
-  }
+  //if (player.weapon < player.weaponImage.length-2 && player.currentWeaponCount > 2)
+  //{
+  //  image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
+  //}
   image(player.weaponImage[player.weapon], width - 160, 100);//curent weapon
 }
 
 void mouseWheel(MouseEvent event)
 {
   float e = event.getCount();
-  if (e > 0 && player.weapon < player.weaponImage.length-1 && dist(mouseX, mouseY, width-155, height-170) > 150)//next weapon
+  if (e > 0 && player.weapon < player.weaponImage.length-1 && player.weapon < player.currentWeaponCount-1 && dist(mouseX, mouseY, width-155, height-170) > 150)//next weapon
   {
     player.weapon++;
   }

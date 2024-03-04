@@ -14,6 +14,7 @@ class Player
   int cooldown = 1000;
   int eyeFrames = 1000;
   int invincibilityTimer;
+  int currentWeaponCount = 1;
   int [] weaponYOffset = {-85,-50,-70,-25,-25,0,0,0};//how far weapon sits from player
   int [] weaponXOffset = {0,0,0,0,-25,25,0,0};//how far weapon sits from player
   
@@ -64,6 +65,7 @@ class Player
      image(weaponImage[weapon],weaponXOffset[weapon],weaponYOffset[weapon]);
      pop();
     }
+    
   }
   void movePlayer()
   {
