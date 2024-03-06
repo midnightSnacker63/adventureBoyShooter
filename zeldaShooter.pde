@@ -63,7 +63,7 @@ void setup()
   badGuyImage[0].resize(75, 0);
   badGuyImage[1] = loadImage("cosmoPixel.png");
   badGuyImage[1].resize(100, 0);
-  badGuyImage[2] = loadImage("splat.png");
+  badGuyImage[2] = loadImage("keese.png");
   badGuyImage[2].resize(100, 0);
 
   badGuyImage[11] = loadImage("ganon.png");
@@ -126,7 +126,8 @@ void handlePlayer()
 void handleGhostNumbers()
 {
   for( ClickReport c: clickReports)
-    c.moveAndDraw();
+    if(c.active)
+      c.moveAndDraw();
 }
 
 void handleShops()
@@ -159,7 +160,7 @@ void handleEnemies()
     if (!enemies.get(i).active)
     {
       if (enemies.get(i).value > 0)
-        pickups.add( new Pickup( 1, enemies.get(i).xPos, enemies.get(i).yPos ));
+        pickups.add( new Pickup( int(random(0,4)), enemies.get(i).xPos, enemies.get(i).yPos ));
       enemies.remove(i);
 
       i--;
@@ -208,7 +209,11 @@ void handleWalls()
 {
   for ( Wall w : walls)
   {
-    w.drawWall();
+    if(dist(w.xPos,w.yPos,player.xPos,player.yPos) < 1500)
+    {
+      w.drawWall();
+      
+    }
     w.checkCollision();
   }
 }
@@ -366,7 +371,7 @@ void keyPressed()
   if (key == 'd')
     player.movingRight = true;
   if (key == 'E')
-    enemies.add( new Enemy( int(random(0, 2)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
+    enemies.add( new Enemy( int(random(0, 3)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
     pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));

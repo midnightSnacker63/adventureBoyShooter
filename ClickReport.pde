@@ -12,6 +12,7 @@ class ClickReport
     xPos = x;
     yPos = y;
     fadeY = yPos - 250;
+    active = true;
   }
  
   public void moveAndDraw()

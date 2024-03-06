@@ -60,12 +60,18 @@ class Enemy
      speed = .45;
        break;
      case 2://dummy
-     health = 5000;
-     speed = 0.1;
-     knockBack = 5;
+     health = 10;
+     speed = 0.6;
+     knockBack = 0.5;
      damage = 1;
-     dummy = true;
-     cooldown = 1000;
+       break;
+     case 3:
+       health = 5000;
+       speed = 0.1;
+       knockBack = 5;
+       damage = 1;
+       dummy = true;
+       cooldown = 1000;
        break;
        
      //ganon
