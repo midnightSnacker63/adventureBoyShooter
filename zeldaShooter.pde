@@ -78,11 +78,15 @@ void setup()
   pickupImage[1].resize(75, 0);
   pickupImage[2] = loadImage("fullHeart.png");
   pickupImage[2].resize(75, 0);
+  pickupImage[3] = loadImage("oldKey.png");
+  pickupImage[3].resize(75, 0);
 
   wallImage[0] = loadImage("cobbleColor.png");
   wallImage[0].resize(int(wallSize), 0);
   wallImage[1] = loadImage("woodTile.png");
   wallImage[1].resize(int(wallSize), 0);
+  wallImage[2] = loadImage("doorLocked.png");
+  wallImage[2].resize(int(wallSize), 0);
 
   mapBorder = loadImage("mapBorder.png");
   mapBorder.resize(365, 0);
@@ -178,6 +182,7 @@ void handleEnemies()
     {
       if (bosses.get(i).value > 0)
         pickups.add( new Pickup( 6, bosses.get(i).xPos, bosses.get(i).yPos ));
+        pickups.add( new Pickup( 8, bosses.get(i).xPos, bosses.get(i).yPos ));
       bosses.remove(i);
 
       i--;
@@ -215,6 +220,14 @@ void handleWalls()
       
     }
     w.checkCollision();
+    
+  }
+  for(int i = 0; i < walls.size(); i++)
+  {
+    if(!walls.get(i).active)
+    {
+      walls.remove(i);
+    }
   }
 }
 
@@ -374,7 +387,8 @@ void keyPressed()
     enemies.add( new Enemy( int(random(0, 3)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
-    pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    for(int i = 0; i < 15; i++)
+      pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
   }
   if (key == 'r')
   {
@@ -439,8 +453,15 @@ void drawHUD()
   textSize(50);
   fill(255);
   textAlign(CORNER);
-  text("X" + player.money, 100, height - 35);
+  text("X" + player.money, 120, height - 35);
   text(int((player.xPos/wallSize)+1)+", "+int((player.yPos/wallSize)+1), 85, height - 90);
+  pop();
+  
+  push();//key count
+  image(pickupImage[3],90,height-175);
+  fill(255);
+  textAlign(CORNER);
+  text("X" + player.keyCount, 120, height - 160);
   pop();
 
   push();//health bar
@@ -459,36 +480,36 @@ void drawHUD()
   {
     circle(width - 240, 125, 70);
   }
-  //if (player.weapon < player.weaponImage.length-1)
-  //{
-  //  circle(width - 80, 125, 70);
-  //}
+  if (player.weapon < player.weaponImage.length-1)
+  {
+    circle(width - 80, 125, 70);
+  }
   if (player.weapon > 1)
   {
     circle(width - 300, 150, 60);
   }
-  //if (player.weapon < player.weaponImage.length-2)
-  //{
-  //  circle(width - 20, 150, 60);
-  //}
+  if (player.weapon < player.weaponImage.length-2)
+  {
+    circle(width - 20, 150, 60);
+  }
   pop();
 
   if (player.weapon > 0)
   {
     image(player.weaponImage[player.weapon-1], width - 240, 125);//previous weapon
   }
-  //if (player.weapon < player.weaponImage.length-1 && player.currentWeaponCount > 0)
-  //{
-  //  image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
-  //}
+  if (player.weapon < player.weaponImage.length-1 && player.currentWeaponCount > 0)
+  {
+    image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
+  }
   if (player.weapon > 1 )
   {
     image(player.weaponImage[player.weapon-2], width - 300, 150);//previous weapon
   }
-  //if (player.weapon < player.weaponImage.length-2 && player.currentWeaponCount > 2)
-  //{
-  //  image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
-  //}
+  if (player.weapon < player.weaponImage.length-2 && player.currentWeaponCount > 2)
+  {
+    image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
+  }
   image(player.weaponImage[player.weapon], width - 160, 100);//curent weapon
 }
 

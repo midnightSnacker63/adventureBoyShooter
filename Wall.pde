@@ -10,14 +10,17 @@ class Wall
   boolean open;
   
   boolean pathable = false;
+  boolean locked;
+  boolean active;
   
-  public Wall(float x, float y, boolean solid )
+  public Wall(float x, float y, int type )
   {
     xPos = x;
     yPos = y;
     size = wallSize;
-    
-    open = !solid;
+    wallType = type;
+    active = true;
+    setTraitsByType();
   }
   
   void drawWall()
@@ -25,32 +28,73 @@ class Wall
     float X = xPos+xOffset;
     float Y = yPos+yOffset;
     
-    if(open)
-    {
-      image(wallImage[1],X,Y);
-    }
-    else
-    {
-      image(wallImage[0],X,Y);
-    }
+    
+    image(wallImage[wallType],X,Y);
+    
   }
-  
+  void setTraitsByType()
+  {
+   switch(wallType)
+   {
+     case 0:
+       open = false;
+       return;
+     case 1:
+       open = true;
+       return;
+     case 2://door
+       open = true;
+       locked = true;
+       return;
+   }
+  }
   void checkCollision()
   {
     //Player
     //Top of wall
     while( player.bottom() > yPos-size/2 && player.xPos < right() && player.xPos > left() && player.bottom() < yPos )
+    {
       player.yPos--;
+      if(locked && player.keyCount > 0)
+      {
+        locked = false;
+        active = false;
+        player.keyCount-=1;
+      }
+    }
     //Bottom of wall
     while( player.top() < yPos+size/2 && player.xPos < right() && player.xPos > left() && player.top() > yPos )
+    {
       player.yPos++;
+      if(locked && player.keyCount > 0)
+      {
+        locked = false;
+        active = false;
+        player.keyCount-=1;
+      }
+    }
     //Left of wall
     while( player.right() > xPos-size/2 && player.yPos < bottom() && player.yPos > top() && player.right() < xPos )
+    {
       player.xPos--;
+      if(locked && player.keyCount > 0)
+      {
+        locked = false;
+        active = false;
+        player.keyCount-=1;
+      }
+    }
     //Right of wall
     while( player.left() < xPos+size/2 && player.yPos < bottom() && player.yPos > top() && player.left() > xPos )
+    {
       player.xPos++;
-   
+      if(locked && player.keyCount > 0)
+      {
+        locked = false;
+        active = false;
+        player.keyCount-=1;
+      }
+    }
     //Enemies
     for( Enemy e: enemies )
     {
@@ -95,6 +139,7 @@ class Wall
         }
       }
   }
+  
 
   public float top() { return yPos-size/2; }
   public float bottom() { return yPos+size/2; }

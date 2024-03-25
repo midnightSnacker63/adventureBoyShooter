@@ -12,6 +12,7 @@ class Pickup
   boolean active;
   boolean lifeHeart;
   boolean healing;
+  boolean doorKey;
   
   public Pickup(int t,float x, float y)
   {
@@ -87,6 +88,13 @@ class Pickup
      image( pickupImage[2],0,0,size,size);
      pop();
    }
+   if(type == 8)//life heart
+   {
+     push();
+     translate(X,Y);
+     image( pickupImage[3],0,0,size,size);
+     pop();
+   }
     //movement
     if( dist(player.xPos,player.yPos,xPos,yPos) < range)
     {
@@ -137,6 +145,13 @@ class Pickup
         player.health = player.maxHealth;
       }
     }
+    if(dist(player.xPos,player.yPos,xPos,yPos) < player.size/2 && doorKey)//key
+    {
+      
+      player.keyCount += value;
+      active = false;
+      
+    }
   }
   
   void setTraitsByType()
@@ -179,6 +194,12 @@ class Pickup
      timer = 30;
      range = 100;
      healing = true;
+       break;
+     case 8: //key
+     value = 1;
+     timer = 30;
+     range = 100;
+     doorKey = true;
        break;
    }
   }
