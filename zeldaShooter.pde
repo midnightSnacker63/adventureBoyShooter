@@ -121,6 +121,12 @@ void handlePlayer()
   player.checkForScroll();
   player.checkNoDamage();
   
+  if(player.health <= 0)
+  {
+    text("game over",width/2,height/2);
+    noLoop();
+  }
+  
   for(int i = 0; i < 6; i++)
   {
     player.weaponUnlocked[i] = shops.get(0).itemBought[i];
