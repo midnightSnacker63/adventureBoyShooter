@@ -17,6 +17,7 @@ class Enemy
   int type;
   int damage = 1;
   int value = 1;
+  int hitTimer = 100;
   
   boolean active;
   boolean stunned;

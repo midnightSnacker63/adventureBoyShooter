@@ -46,6 +46,9 @@ class Wall
        open = true;
        locked = true;
        return;
+     case 3://cake :)
+       open = true;
+       return;
    }
   }
   void checkCollision()

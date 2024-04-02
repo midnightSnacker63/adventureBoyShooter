@@ -10,6 +10,7 @@ ArrayList<Enemy> bosses = new ArrayList<Enemy>();
 ArrayList<Wall> walls = new ArrayList<Wall>();
 ArrayList<ClickReport> clickReports = new ArrayList<ClickReport>();
 ArrayList<Shop> shops = new ArrayList<Shop>();
+ArrayList<Explosion> explosion = new ArrayList<Explosion>();
 
 //for scrolling
 float xOffset, yOffset;
@@ -30,6 +31,7 @@ PImage [] wallImage = new PImage[5];
 
 PImage money;
 PImage mapBorder;
+PImage explosionPic;
 
 
 void setup()
@@ -87,6 +89,10 @@ void setup()
   wallImage[1].resize(int(wallSize), 0);
   wallImage[2] = loadImage("doorLocked.png");
   wallImage[2].resize(int(wallSize), 0);
+  wallImage[3] = loadImage("cake.png");
+  wallImage[3].resize(int(wallSize), 0);
+
+  explosionPic = loadImage("explosion.png");
 
   mapBorder = loadImage("mapBorder.png");
   mapBorder.resize(365, 0);
@@ -104,6 +110,7 @@ void draw()
     handlePlayer();
     handleEnemies();
     handleShots();
+    handleExplosions();
     drawHUD();
     drawMiniMap();
     handleGhostNumbers();
@@ -214,6 +221,20 @@ void handleShots()
     s.moveAndDrawShot();
     s.checkForHit();
   }
+}
+
+void handleExplosions()
+{
+  for(int i = 0; i < explosion.size(); i++)
+  {
+    explosion.get(i).drawExplosion();
+    explosion.get(i).moveExplosion();
+    explosion.get(i).checkForHit();
+    if(!explosion.get(i).active)//remove enemies if they are not active
+    {
+      explosion.remove(i);
+    }
+  } 
 }
 
 void handleWalls()

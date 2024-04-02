@@ -24,6 +24,7 @@ class Shot
   boolean canShoot = true;
   boolean bouncy;
   boolean grapple;
+  boolean explosive;
   
   public Shot( int t, float x, float y )
   {
@@ -95,12 +96,13 @@ class Shot
      case 6://bomb
        size = 60;
        duration = 20;
-       damage = 50;
+       damage = 25;
        setSpeed( 20 );
        friction = 0.95;
        travelDistance = 3000;
        cooldown = 2000;
        knockBack = 5;
+       explosive = true;
        break;
      //bad guy deku nut
      case -1:
@@ -307,6 +309,10 @@ class Shot
           else
           {
             active = false;
+            if( explosive )
+            {
+              explosion.add(new Explosion(xPos,yPos,0));
+            }
           }
           return;
         }
@@ -321,7 +327,13 @@ class Shot
             returning = true;
           }
           else 
+          {
             active = false;
+            if( explosive )
+            {
+              explosion.add(new Explosion(xPos,yPos,0));
+            }
+          }
           return;
         }
       }
