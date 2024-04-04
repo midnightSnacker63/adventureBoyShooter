@@ -18,6 +18,8 @@ class Player
   int currentWeaponCount = 6;
   int [] weaponYOffset = {-85,-50,-70,-25,-25,0,0,0};//how far weapon sits from player
   int [] weaponXOffset = {0,0,0,0,-25,25,0,0};//how far weapon sits from player
+  int hitTimer = 0;
+  int hitCooldown = 50;
   
   boolean movingLeft, movingRight, movingUp, movingDown;
   boolean invincible;

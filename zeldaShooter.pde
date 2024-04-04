@@ -67,11 +67,15 @@ void setup()
   badGuyImage[1].resize(100, 0);
   badGuyImage[2] = loadImage("keese.png");
   badGuyImage[2].resize(100, 0);
+  badGuyImage[3] = loadImage("bombGuy.png");
+  badGuyImage[3].resize(100, 0);
 
   badGuyImage[11] = loadImage("ganon.png");
   badGuyImage[11].resize(250, 0);
   badGuyImage[12] = loadImage("oldMan.png");
   badGuyImage[12].resize(250, 0);
+  badGuyImage[14] = loadImage("bombGuy.png");
+  badGuyImage[14].resize(250, 0);
 
 
   pickupImage[0] = loadImage("rupee.png");
@@ -411,7 +415,7 @@ void keyPressed()
   if (key == 'd')
     player.movingRight = true;
   if (key == 'E')
-    enemies.add( new Enemy( int(random(0, 3)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
+    enemies.add( new Enemy( int(random(0, 4)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
     for(int i = 0; i < 15; i++)
@@ -442,6 +446,7 @@ void keyPressed()
     inShop = false;
     inWorld = true;
   }
+
 }
 void keyReleased()
 {
@@ -459,7 +464,7 @@ void mousePressed()
   //shots.add(new Shot(player.weapon+1,player.xPos,player.yPos));
   if (mousePressed && (mouseButton == RIGHT))
   {
-    bosses.add( new Enemy( 11, random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
+    bosses.add( new Enemy( 14, random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   }
   if (mousePressed && (mouseButton == LEFT))
   {

@@ -87,6 +87,11 @@ class Explosion
         bosses.get(i).hitTimer = millis()+enemies.get(i).hitCooldown;
       }
     }
+    if( dist( xPos,yPos, player.xPos,player.yPos ) < (size+player.size)/2 && active && millis() > player.hitTimer && bad )
+      {
+        player.takeDamage(damage, 5 , 5);
+        player.hitTimer = millis()+player.hitCooldown;
+      }
   }
   
   void setTraits()
@@ -100,6 +105,22 @@ class Explosion
         maxSize = 200;
         lifeTime = 1000;
         growthRate = 5;
+        return;
+      case 1:
+        bad = true;
+        damage = 25;
+        size = 20;
+        maxSize = 200;
+        lifeTime = 1000;
+        growthRate = 5;
+        return;
+      case 2:
+        bad = true;
+        damage = 100;
+        size = 100;
+        maxSize = 750;
+        lifeTime = 2500;
+        growthRate = 12;
         return;
     }
   }

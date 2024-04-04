@@ -22,6 +22,7 @@ class Enemy
   boolean active;
   boolean stunned;
   boolean dummy = false;
+  boolean explosive;
   
   //boss data
   boolean isBoss;
@@ -67,12 +68,13 @@ class Enemy
      damage = 1;
        break;
      case 3:
-       health = 5000;
-       speed = 0.1;
+       health = 5;
+       speed = 0.25;
        knockBack = 5;
        damage = 1;
        dummy = true;
        cooldown = 1000;
+       explosive = true;
        break;
        
      //ganon
@@ -92,15 +94,29 @@ class Enemy
      case 12://test
      isBoss = true;
      range = 500;
-     maxHealth = 250;
-     health = 250;
+     maxHealth = 100;
+     health = 100;
      size = wallSize * 2;
      damage = 0;
      speed = 0;
      population = 1;
      knockBack = 0;
      spawnRate = 300;
-     spawnRange = range;
+     spawnRange = 100;
+       break;
+     case 14://test
+     isBoss = true;
+     range = 500;
+     maxHealth = 150;
+     health = 150;
+     size = wallSize * 2;
+     damage = 3;
+     speed = 0.025;
+     population = 1;
+     knockBack = 0;
+     spawnRate = 300;
+     spawnRange = 100;
+     explosive = true;
        break;
    }
   }
@@ -197,8 +213,7 @@ class Enemy
       ySpd += y;
     }
     health -= amount;
-    spawnRange += amount;
-    population += amount;
+    population += 1;
     if(range < 1000)
       range += 50;
     if( amount > 0 )
@@ -206,6 +221,14 @@ class Enemy
     if(health <= 0)
     {
       active = false;
+      if( explosive && !isBoss)
+      {
+        explosion.add(new Explosion(xPos,yPos,1));
+      }
+      if( explosive && isBoss)
+      {
+        explosion.add(new Explosion(xPos,yPos,2));
+      }
     }
     
   }
