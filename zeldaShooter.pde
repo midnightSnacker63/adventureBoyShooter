@@ -109,7 +109,7 @@ void draw()
   if(inWorld)
   {
     handleWalls();
-    handleShops();
+    
     handlePickups();
     handlePlayer();
     handleEnemies();
@@ -122,6 +122,7 @@ void draw()
   if(inShop)
   {
     handleShopInside();
+    handleShops();
   }
 }
 
@@ -470,8 +471,10 @@ void mousePressed()
   {
     firingWeapon = true;
   }
-  buyStuff();
-  
+  if(inShop)
+  {
+    buyStuff();
+  }
 }
 void mouseReleased()
 {

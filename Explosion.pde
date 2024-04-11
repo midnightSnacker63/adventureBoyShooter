@@ -84,7 +84,7 @@ class Explosion
       if( dist( xPos,yPos, bosses.get(i).xPos,bosses.get(i).yPos ) < (size+bosses.get(i).size)/2 && active && millis() > bosses.get(i).hitTimer && !bad )
       {
         bosses.get(i).takeDamage(damage, .25 , .25);
-        bosses.get(i).hitTimer = millis()+enemies.get(i).hitCooldown;
+        bosses.get(i).hitTimer = millis()+bosses.get(i).hitCooldown;
       }
     }
     if( dist( xPos,yPos, player.xPos,player.yPos ) < (size+player.size)/2 && active && millis() > player.hitTimer && bad )
