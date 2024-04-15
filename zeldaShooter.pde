@@ -74,7 +74,7 @@ void setup()
   badGuyImage[11].resize(250, 0);
   badGuyImage[12] = loadImage("oldMan.png");
   badGuyImage[12].resize(250, 0);
-  badGuyImage[14] = loadImage("bombGuy.png");
+  badGuyImage[14] = loadImage("kingBomb.png");
   badGuyImage[14].resize(250, 0);
 
 

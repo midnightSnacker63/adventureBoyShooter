@@ -91,7 +91,7 @@ class Enemy
      spawnRate = 3000;
      spawnRange = 50;
        break;
-     case 12://test
+     case 12://old man
      isBoss = true;
      range = 500;
      maxHealth = 100;
@@ -104,7 +104,7 @@ class Enemy
      spawnRate = 300;
      spawnRange = 100;
        break;
-     case 14://test
+     case 14://bomb
      isBoss = true;
      range = 500;
      maxHealth = 150;
@@ -213,7 +213,7 @@ class Enemy
       ySpd += y;
     }
     health -= amount;
-    population += 1;
+    population += int(random(0,2));
     if(range < 1000)
       range += 50;
     if( amount > 0 )
@@ -254,10 +254,10 @@ class Enemy
   {
     int tally = 0;
     for( Enemy e: enemies )
-      if( e.type == type-11 ) //if enemy was spawned by this boss
+      if( e.type == type-11  ) //if enemy was spawned by this boss
         tally++;
        
-    if( tally >= population )
+    if( tally >= population  )
       return true;
      
     return false;
