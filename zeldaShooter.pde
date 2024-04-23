@@ -72,7 +72,7 @@ void setup()
 
   badGuyImage[11] = loadImage("ganon.png");
   badGuyImage[11].resize(250, 0);
-  badGuyImage[12] = loadImage("oldMan.png");
+  badGuyImage[12] = loadImage("EarlPumpernickel.png");
   badGuyImage[12].resize(250, 0);
   badGuyImage[14] = loadImage("kingBomb.png");
   badGuyImage[14].resize(250, 0);
@@ -109,7 +109,7 @@ void draw()
   if(inWorld)
   {
     handleWalls();
-    
+    handleShops();
     handlePickups();
     handlePlayer();
     handleEnemies();
@@ -122,7 +122,7 @@ void draw()
   if(inShop)
   {
     handleShopInside();
-    handleShops();
+    
   }
 }
 
