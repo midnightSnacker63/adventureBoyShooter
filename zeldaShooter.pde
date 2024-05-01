@@ -419,8 +419,8 @@ void keyPressed()
     enemies.add( new Enemy( int(random(0, 4)), random(mouseX-50, mouseX+50)-xOffset, random(mouseY-50, mouseY+50)-yOffset ));
   if (key == 'f')
   {
-    for(int i = 0; i < 15; i++)
-      pickups.add( new Pickup( int(random(1, 6)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
+    for(int i = 0; i < 12; i++)
+      pickups.add( new Pickup( int(random(7, 8)), random(mouseX-200, mouseX+200)-xOffset, random(mouseY-200, mouseY+200)-yOffset ));
   }
   if (key == 'r')
   {
@@ -502,11 +502,11 @@ void drawHUD()
   push();//health bar
   rectMode(CORNER);
   fill(200,200,200); 
-  rect(46, 46, (player.maxHealth*5)+8, 28);
+  rect(46, 46, (player.maxHealth*2)+8, 28);
   fill(0);
-  rect(50, 50, player.maxHealth*5, 20);
+  rect(50, 50, player.maxHealth*2, 20);
   fill(255, 10, 0);
-  rect(50, 50, player.health*5, 20);
+  rect(50, 50, player.health*2, 20);
   pop();
   push();//weapons
   stroke(#CEB63A);

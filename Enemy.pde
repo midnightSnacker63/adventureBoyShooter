@@ -60,6 +60,7 @@ class Enemy
      health = 50;
      knockBack = 0.75;
      speed = .45;
+     damage = 5;
        break;
      case 2://dummy
      health = 10;
