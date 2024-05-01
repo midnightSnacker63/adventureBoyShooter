@@ -14,7 +14,7 @@ ArrayList<Explosion> explosion = new ArrayList<Explosion>();
 
 //for scrolling
 float xOffset, yOffset;
-float scrollXDist = 550, scrollYDist = 340;
+float scrollXDist = 750, scrollYDist = 400;
 //wall data
 float wallSize = 100;
 float miniMapZoom = 10;
@@ -321,7 +321,7 @@ void drawMiniMap()
   noStroke();
   fill(#81D8FF);
   float xDist, yDist; //distance from player to wall
-  for ( Wall w : walls )
+  for ( Wall w : walls )//walls on minimap
     if ( dist( w.xPos, w.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
       xDist = w.xPos-player.xPos;
@@ -341,7 +341,7 @@ void drawMiniMap()
       //image(wallImage[w.Type],width-110+xDist/10, height-110+yDist/10, wallSize/10,wallSize/10);
     }
 
-  for ( Enemy e : enemies)
+  for ( Enemy e : enemies)//enemies on minimap
   {
     if ( dist( e.xPos, e.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
@@ -355,7 +355,7 @@ void drawMiniMap()
       pop();
     }
   }
-  for ( Enemy b : bosses)
+  for ( Enemy b : bosses)//bosses on minimap
   {
     if ( dist( b.xPos, b.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
@@ -369,7 +369,7 @@ void drawMiniMap()
       pop();
     }
   }
-  for ( Pickup p : pickups)
+  for ( Pickup p : pickups)//pickups on minimap
   {
     if ( dist( p.xPos, p.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
@@ -379,7 +379,7 @@ void drawMiniMap()
       circle( width-155+xDist/miniMapZoom, height-170+yDist/miniMapZoom, wallSize/(miniMapZoom+5) );
     }
   }
-  for ( Shop p : shops)
+  for ( Shop p : shops)//shops on minimap
   {
     if ( dist( p.xPos, p.yPos, player.xPos, player.yPos ) < 125*miniMapZoom )
     {
@@ -489,19 +489,21 @@ void drawHUD()
   fill(255);
   textAlign(CORNER);
   text("X" + player.money, 120, height - 35);
-  text(int((player.xPos/wallSize)+1)+", "+int((player.yPos/wallSize)+1), 85, height - 90);
+  //text(int((player.xPos/wallSize)+1)+", "+int((player.yPos/wallSize)+1), 85, height - 90);
   pop();
   
   push();//key count
-  image(pickupImage[3],90,height-175);
+  image(pickupImage[3],90,height-120);
   fill(255);
   textAlign(CORNER);
-  text("X" + player.keyCount, 120, height - 160);
+  text("X" + player.keyCount, 120, height - 100);
   pop();
 
   push();//health bar
   rectMode(CORNER);
-  noFill();
+  fill(200,200,200); 
+  rect(46, 46, (player.maxHealth*5)+8, 28);
+  fill(0);
   rect(50, 50, player.maxHealth*5, 20);
   fill(255, 10, 0);
   rect(50, 50, player.health*5, 20);
@@ -513,37 +515,37 @@ void drawHUD()
   circle(width - 160, 100, 100);
   if (player.weapon > 0)
   {
-    circle(width - 240, 125, 70);
+    //circle(width - 240, 125, 70);
   }
   if (player.weapon < player.weaponImage.length-1)
   {
-    circle(width - 80, 125, 70);
+    //circle(width - 80, 125, 70);
   }
   if (player.weapon > 1)
   {
-    circle(width - 300, 150, 60);
+    //circle(width - 300, 150, 60);
   }
   if (player.weapon < player.weaponImage.length-2)
   {
-    circle(width - 20, 150, 60);
+    //circle(width - 20, 150, 60);
   }
   pop();
 
   if (player.weapon > 0)
   {
-    image(player.weaponImage[player.weapon-1], width - 240, 125);//previous weapon
+    //image(player.weaponImage[player.weapon-1], width - 240, 125);//previous weapon
   }
   if (player.weapon < player.weaponImage.length-1 && player.currentWeaponCount > 0)
   {
-    image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
+    //image(player.weaponImage[player.weapon+1], width - 80, 125);//next weapon
   }
   if (player.weapon > 1 )
   {
-    image(player.weaponImage[player.weapon-2], width - 300, 150);//previous weapon
+    //image(player.weaponImage[player.weapon-2], width - 300, 150);//previous weapon
   }
   if (player.weapon < player.weaponImage.length-2 && player.currentWeaponCount > 2)
   {
-    image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
+    //image(player.weaponImage[player.weapon+2], width - 20, 150);//next weapon
   }
   image(player.weaponImage[player.weapon], width - 160, 100);//curent weapon
 }

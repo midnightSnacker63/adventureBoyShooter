@@ -213,7 +213,6 @@ class Enemy
       ySpd += y;
     }
     health -= amount;
-    population += int(random(0,2));
     if(range < 1000)
       range += 50;
     if( amount > 0 )
